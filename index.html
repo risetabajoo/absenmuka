@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Recognition App</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    #videoElement {
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center mt-4">Face Recognition App</h2>
+    <div class="text-center mt-4">
+      <button id="startCameraBtn" class="btn btn-primary">Start Camera</button>
+      <button id="recognizeBtn" class="btn btn-success">Recognize Face</button>
+      <button id="saveFaceBtn" class="btn btn-warning">Save Face Data</button>
+    </div>
+    <div class="text-center mt-4">
+      <video id="videoElement" autoplay></video>
+    </div>
+  </div>
+
+  <!-- Load TensorFlow.js and Face API -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
