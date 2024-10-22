@@ -1,4 +1,6 @@
 const video = document.getElementById('videoElement');
+const viewDataBtn = document.getElementById('viewDataBtn');
+const savedDataContainer = document.getElementById('savedDataContainer');
 
 // Fungsi untuk memulai kamera dan memuat model FaceAPI
 const startCamera = async () => {
@@ -11,7 +13,7 @@ const startCamera = async () => {
         console.log("Something went wrong with camera access.");
       });
   }
-  
+
   // Muat FaceAPI model
   await faceapi.nets.tinyFaceDetector.loadFromUri('models');
   await faceapi.nets.faceLandmark68Net.loadFromUri('models');
@@ -19,6 +21,9 @@ const startCamera = async () => {
   await faceapi.nets.ssdMobilenetv1.loadFromUri('models');
   
   console.log('Camera started and models loaded');
+
+  // Tampilkan tombol Lihat Data setelah kamera dimulai
+  viewDataBtn.style.display = 'inline-block';
 };
 
 // Fungsi untuk mendeteksi wajah dan mengambil descriptor wajah
@@ -69,6 +74,26 @@ const recognizeFace = async () => {
   }
 };
 
+// Fungsi untuk menampilkan data wajah yang sudah tersimpan di localStorage
+const viewSavedFaceData = () => {
+  const savedFaceDescriptor = localStorage.getItem('savedFace');
+  if (savedFaceDescriptor) {
+    savedDataContainer.innerHTML = `
+      <div class="alert alert-info">
+        <strong>Saved Face Data:</strong> ${savedFaceDescriptor}
+      </div>
+    `;
+    console.log('Saved face data:', savedFaceDescriptor);
+  } else {
+    savedDataContainer.innerHTML = `
+      <div class="alert alert-danger">
+        No face data found.
+      </div>
+    `;
+    console.log('No saved face data in localStorage');
+  }
+};
+
 // Event listener untuk memulai kamera
 document.getElementById('startCameraBtn').addEventListener('click', async () => {
   await startCamera();
@@ -85,4 +110,10 @@ document.getElementById('saveFaceBtn').addEventListener('click', async () => {
 document.getElementById('recognizeBtn').addEventListener('click', async () => {
   await recognizeFace();
   console.log('Recognize face button clicked');
+});
+
+// Event listener untuk melihat data wajah yang tersimpan
+document.getElementById('viewDataBtn').addEventListener('click', () => {
+  viewSavedFaceData();
+  console.log('View data button clicked');
 });
